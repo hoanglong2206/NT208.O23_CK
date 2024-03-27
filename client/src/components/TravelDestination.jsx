@@ -9,10 +9,14 @@ import {
   AspectRatio,
 } from "@chakra-ui/react";
 
-const CardCategories = () => {
+const TravelDestination = () => {
   return (
     <SimpleGrid
-      templateColumns={{ sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }}
+      templateColumns={{
+        sm: "1fr 1fr",
+        md: "1fr 1fr 1fr",
+        lg: "1fr 1fr 1fr 1fr",
+      }}
       spacing={8}
     >
       <Card>
@@ -26,7 +30,7 @@ const CardCategories = () => {
             }}
           >
             <Image
-              src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+              src="https://cf.bstatic.com/xdata/images/city/600x600/688853.jpg?k=f6427c8fccdf777e4bbc75fcd245e7c66204280181bea23350388c76c57348d1&o="
               alt="Green double couch with wooden legs"
               borderRadius="lg"
               objectFit="cover"
@@ -36,10 +40,14 @@ const CardCategories = () => {
           </AspectRatio>
 
           <Stack mt="6" spacing="3">
-            <Heading size="md">Hotels</Heading>
+            <Heading size="md">Hà Nội</Heading>
 
-            <Text color="blue.600" fontSize="2xl">
-              120 hotels
+            <Text
+              color="blue.600"
+              fontWeight={"500"}
+              fontSize={{ sm: "sm", md: "md", lg: "lg" }}
+            >
+              20 destinations
             </Text>
           </Stack>
         </CardBody>
@@ -55,7 +63,7 @@ const CardCategories = () => {
             }}
           >
             <Image
-              src="https://q-xx.bstatic.com/xdata/images/xphoto/263x210/57584488.jpeg?k=d8d4706fc72ee789d870eb6b05c0e546fd4ad85d72a3af3e30fb80ca72f0ba57&o="
+              src="https://cf.bstatic.com/xdata/images/city/600x600/688844.jpg?k=02892d4252c5e4272ca29db5faf12104004f81d13ff9db724371de0c526e1e15&o="
               alt="Green double couch with wooden legs"
               borderRadius="lg"
               objectFit="cover"
@@ -64,10 +72,14 @@ const CardCategories = () => {
             />
           </AspectRatio>
           <Stack mt="6" spacing="3">
-            <Heading size="md">Hotels</Heading>
+            <Heading size="md">Đà Nẵng</Heading>
 
-            <Text color="blue.600" fontSize="2xl">
-              120 hotels
+            <Text
+              color="blue.600"
+              fontWeight={"500"}
+              fontSize={{ sm: "sm", md: "md", lg: "lg" }}
+            >
+              30 destinations
             </Text>
           </Stack>
         </CardBody>
@@ -83,7 +95,7 @@ const CardCategories = () => {
             }}
           >
             <Image
-              src="https://r-xx.bstatic.com/xdata/images/hotel/263x210/119467716.jpeg?k=f3c2c6271ab71513e044e48dfde378fcd6bb80cb893e39b9b78b33a60c0131c9&o="
+              src="https://cf.bstatic.com/xdata/images/city/600x600/688893.jpg?k=d32ef7ff94e5d02b90908214fb2476185b62339549a1bd7544612bdac51fda31&o="
               alt="Green double couch with wooden legs"
               borderRadius="lg"
               objectFit="cover"
@@ -92,10 +104,14 @@ const CardCategories = () => {
             />
           </AspectRatio>
           <Stack mt="6" spacing="3">
-            <Heading size="md">Hotels</Heading>
+            <Heading size="md">Hồ Chí Minh</Heading>
 
-            <Text color="blue.600" fontSize="2xl">
-              120 hotels
+            <Text
+              color="blue.600"
+              fontWeight={"500"}
+              fontSize={{ sm: "sm", md: "md", lg: "lg" }}
+            >
+              40 destinations
             </Text>
           </Stack>
         </CardBody>
@@ -111,7 +127,7 @@ const CardCategories = () => {
             }}
           >
             <Image
-              src="https://r-xx.bstatic.com/xdata/images/hotel/263x210/100235855.jpeg?k=5b6e6cff16cfd290e953768d63ee15f633b56348238a705c45759aa3a81ba82b&o="
+              src="https://cf.bstatic.com/xdata/images/city/600x600/688831.jpg?k=7b999c7babe3487598fc4dd89365db2c4778827eac8cb2a47d48505c97959a78&o="
               alt="Green double couch with wooden legs"
               borderRadius="lg"
               objectFit="cover"
@@ -120,10 +136,14 @@ const CardCategories = () => {
             />
           </AspectRatio>
           <Stack mt="6" spacing="3">
-            <Heading size="md">Hotels</Heading>
+            <Heading size="md">Đà Lạt</Heading>
 
-            <Text color="blue.600" fontSize="2xl">
-              120 hotels
+            <Text
+              color="blue.600"
+              fontWeight={"500"}
+              fontSize={{ sm: "sm", md: "md", lg: "lg" }}
+            >
+              50 destinations
             </Text>
           </Stack>
         </CardBody>
@@ -132,4 +152,4 @@ const CardCategories = () => {
   );
 };
 
-export default CardCategories;
+export default TravelDestination;
