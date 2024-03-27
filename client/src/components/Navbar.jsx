@@ -50,7 +50,11 @@ const Navbar = () => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          <Flex as={"a"} alignItems={"center"} cursor={"pointer"} href="/">
+          <Flex
+            onClick={() => navigate("/")}
+            alignItems={"center"}
+            cursor={"pointer"}
+          >
             <Icon as={CgBee} w={10} h={10} mr="10px" />
             <Text as="b" fontSize={"20px"}>
               Bee Travel
