@@ -21,12 +21,29 @@ import { MdPermContactCalendar } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { CgBee } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../context/slices/auth";
+import customAxios from "../config/customAxios";
 
 const Links = ["About", "Support", "Teams"];
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleLogout = async () => {
+    try {
+      const response = await customAxios.get("/user/logout");
+
+      if (response.data.status === "success") {
+        dispatch(logout());
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Box
       position={"sticky"}
@@ -100,7 +117,7 @@ const Navbar = () => {
                 Contact
               </MenuItem>
               <MenuDivider />
-              <MenuItem>
+              <MenuItem onClick={handleLogout}>
                 <Icon as={TbLogout2} w={6} h={6} mr={"8px"} />
                 Logout
               </MenuItem>

@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
   Button,
@@ -15,22 +14,35 @@ import {
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import customAxios from "../config/customAxios";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    console.log({
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      confirmPassword: formData.get("confirm-password"),
-    });
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const passwordConfirm = formData.get("confirm-password");
+
+      const response = await customAxios.post("/user/signup", {
+        name,
+        email,
+        password,
+        passwordConfirm,
+      });
+
+      if (response.data.status === "success") {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -50,16 +62,10 @@ export default function Register() {
           p={8}
         >
           <Stack spacing={4}>
-            <HStack>
-              <FormControl id="firstName" isRequired>
-                <FormLabel>First Name</FormLabel>
-                <Input name="firstName" type="text" />
-              </FormControl>
-              <FormControl id="lastName">
-                <FormLabel>Last Name</FormLabel>
-                <Input name="lastName" type="text" />
-              </FormControl>
-            </HStack>
+            <FormControl id="name" isRequired>
+              <FormLabel>Name</FormLabel>
+              <Input name="name" type="text" />
+            </FormControl>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input name="email" type="email" />
