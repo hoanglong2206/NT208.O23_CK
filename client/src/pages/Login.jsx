@@ -13,9 +13,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../context/slices/auth";
 import customAxios from "../config/customAxios";
 
@@ -23,6 +23,7 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const user = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     try {
@@ -50,6 +51,19 @@ export default function Login() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const checkIsLoggedIn = () => {
+      if (user.token) {
+        navigate("/");
+      }
+    };
+    checkIsLoggedIn();
+
+    return () => {
+      checkIsLoggedIn();
+    };
+  }, [user, navigate]);
 
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg="gray.50">

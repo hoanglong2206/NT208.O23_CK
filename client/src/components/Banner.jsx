@@ -16,7 +16,7 @@ export default function Banner() {
   return (
     <Box position={"relative"} mb={4} borderRadius={"md"}>
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacingY={4}>
-        <VStack spacing={4} align={"start"} justify={"center"} p={8}>
+        <VStack spacing={4} align={"center"} justify={"center"} p={8}>
           <Flex
             spacing={2}
             fontWeight={"500"}
@@ -29,12 +29,14 @@ export default function Banner() {
               borderRadius={40}
               align={"center"}
               justify={"center"}
+              display={"flex"}
             >
               <Text fontSize={"2xl"}>Welcome to Bee Travel</Text>
             </Box>
           </Flex>
           <Text fontSize={"2xl"} fontWeight={"600"}>
             Traveling opens up a world of possibilities. Where will you go next?
+            A world of possibilities awaits you.
           </Text>
           <Text fontSize={"lg"} color={"gray.500"}>
             Discover the best tours and travel packages with Bee Travel.
