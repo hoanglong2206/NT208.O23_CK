@@ -13,20 +13,42 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { login } from "../context/slices/auth";
+import customAxios from "../config/customAxios";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    console.log({
-      email: formData.get("email"),
-      password: formData.get("password"),
-    });
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      const response = await customAxios.post("/user/login", {
+        email,
+        password,
+      });
+
+      if (response.data.status === "success") {
+        dispatch(
+          login({
+            token: response.data.token,
+            user: response.data.data.user,
+            timeExpire: response.data.timeExpire,
+          })
+        );
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
