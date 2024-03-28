@@ -20,16 +20,25 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { MdPermContactCalendar } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { CgBee } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../context/slices/auth";
 import customAxios from "../config/customAxios";
 
-const Links = ["About", "Support", "Teams"];
+const Links = [
+  { name: "Home", link: "/" },
+  { name: "Tours", link: "/tours" },
+  { name: "Teams", link: "/teams" },
+];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { pathname } = location;
+
+  const user = useSelector((state) => state.auth);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleLogout = async () => {
@@ -79,50 +88,65 @@ const Navbar = () => {
           </Flex>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+              <NavLink key={link.link} to={link.link}>
+                <Box
+                  px={2}
+                  py={1}
+                  rounded={"md"}
+                  _hover={{
+                    bg: "teal.300",
+                  }}
+                  fontWeight={"500"}
+                  bgColor={pathname === link.link ? "teal.300" : "teal.200"}
+                >
+                  {link.name}
+                </Box>
+              </NavLink>
             ))}
           </HStack>
         </HStack>
         <Flex alignItems={"center"} gap={"10px"}>
-          <Button
-            onClick={() => navigate("/login")}
-            fontSize={"sm"}
-            fontWeight={600}
-            colorScheme="teal"
-          >
-            Login
-          </Button>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              minW={0}
+          {user.token ? (
+            <Menu>
+              <Text fontSize={"md"} fontWeight={500}>
+                {user.user.name}
+              </Text>
+
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+              >
+                <Avatar size={"sm"} src={user.user.photo} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>
+                  <Icon as={FaRegUserCircle} w={6} h={6} mr={"8px"} />
+                  Account
+                </MenuItem>
+                <MenuItem>
+                  <Icon as={MdPermContactCalendar} w={6} h={6} mr={"8px"} />
+                  Contact
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem onClick={handleLogout}>
+                  <Icon as={TbLogout2} w={6} h={6} mr={"8px"} />
+                  Logout
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Button
+              onClick={() => navigate("/login")}
+              fontSize={"sm"}
+              fontWeight={600}
+              colorScheme="teal"
             >
-              <Avatar
-                size={"sm"}
-                src={
-                  "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                }
-              />
-            </MenuButton>
-            <MenuList>
-              <MenuItem>
-                <Icon as={FaRegUserCircle} w={6} h={6} mr={"8px"} />
-                Account
-              </MenuItem>
-              <MenuItem>
-                <Icon as={MdPermContactCalendar} w={6} h={6} mr={"8px"} />
-                Contact
-              </MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleLogout}>
-                <Icon as={TbLogout2} w={6} h={6} mr={"8px"} />
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
+              Login
+            </Button>
+          )}
         </Flex>
       </Flex>
 
@@ -130,7 +154,19 @@ const Navbar = () => {
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
             {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+              <NavLink key={link.link} to={link.link}>
+                <Box
+                  px={4}
+                  py={2}
+                  rounded={"md"}
+                  _hover={{
+                    bg: "teal.300",
+                  }}
+                  fontWeight={"500"}
+                >
+                  {link.name}
+                </Box>
+              </NavLink>
             ))}
           </Stack>
         </Box>
@@ -140,24 +176,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-const NavLink = (props) => {
-  const { children } = props;
-
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: "teal.300",
-      }}
-      href={"#"}
-      fontWeight={"500"}
-    >
-      {children}
-    </Box>
-  );
-};

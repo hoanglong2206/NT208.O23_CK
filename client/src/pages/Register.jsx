@@ -11,15 +11,17 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../config/customAxios";
+import { useSelector } from "react-redux";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     try {
@@ -45,6 +47,18 @@ export default function Register() {
     }
   };
 
+  useEffect(() => {
+    const checkIsLoggedIn = () => {
+      if (user.token) {
+        navigate("/");
+      }
+    };
+    checkIsLoggedIn();
+
+    return () => {
+      checkIsLoggedIn();
+    };
+  }, [user, navigate]);
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg="gray.50">
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
